@@ -23,9 +23,9 @@ public class GameController : MonoBehaviour {
         for (int z = 0; z < currentLevel.height; z++) {
             for (int x = 0; x < currentLevel.width; x++) {
                 Vector3 pos = new Vector3(
-                    transform.position.x - ((float)currentLevel.width / 2f) + (float)x,
+                    transform.position.x - (currentLevel.width / 2f) + x,
                     transform.position.y,
-                    transform.position.z + ((float)currentLevel.height / 2f) - (float)z
+                    transform.position.z + (currentLevel.height / 2f) - z
                 );
 
                 GameObject cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
