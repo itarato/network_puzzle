@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class CellController : MonoBehaviour {
     private bool isMoving = false;
     private Coord coord;
     private GameController gameController;
-    private bool isOn = false;
+    private bool isOn = true;
     private Level.Cell cell;
 
     public List<GameObject> paths;
@@ -16,15 +15,6 @@ public class CellController : MonoBehaviour {
     public Material onMaterial;
     public Material offMaterial;
     public float rotateTime = 0.2f;
-
-    // Start is called before the first frame update
-    void Start() {
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 
     public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
         TurnOff();

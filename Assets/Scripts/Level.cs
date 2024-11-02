@@ -45,6 +45,8 @@ public class Level {
     public List<Cell> cells;
     public Coord source;
 
+    private List<Coord> endCellCoordsCache = new List<Coord>();
+
     // North, east, south, west.
     static int[,] neighbourMap = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 
@@ -53,6 +55,14 @@ public class Level {
         this.height = height;
         this.cells = cells;
         this.source = source;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (cells[y * width + x].isEnd) {
+                    endCellCoordsCache.Add(new Coord(x, y));
+                }
+            }
+        }
     }
 
     public Cell CellAt(Coord coord) {
@@ -111,5 +121,15 @@ public class Level {
 
     public bool IsValidCoord(Coord coord) {
         return coord.x >= 0 && coord.y >= 0 && coord.x < width && coord.y < height;
+    }
+
+    public bool IsSolution() {
+        List<Coord> activeCellCoords = ActiveCells(null);
+
+        foreach (var endCellCoord in endCellCoordsCache) {
+            if (!activeCellCoords.Contains(endCellCoord)) return false;
+        }
+
+        return true;
     }
 }

@@ -9,18 +9,15 @@ public class GameController : MonoBehaviour {
     private List<GameObject> cellInstances = new List<GameObject>();
 
     void Start() {
-        List<Level.Cell> cells = new List<Level.Cell>();
-        cells.Add(new Level.Cell(new bool[] { false, true, false, false }));
-        cells.Add(new Level.Cell(new bool[] { false, false, true, true }));
-        cells.Add(new Level.Cell(new bool[] { false, true, false, false }));
-        cells.Add(new Level.Cell(new bool[] { true, false, false, true }));
-
-        currentLevel = new Level(2, 2, cells, new Coord(0, 0));
-
         Reload();
     }
 
     void Reload() {
+        currentLevel = LevelGenerator.Generate(2, 2);
+
+        foreach (var cellInstance in cellInstances) {
+            Destroy(cellInstance.gameObject);
+        }
         cellInstances.Clear();
 
         for (int z = 0; z < currentLevel.height; z++) {
@@ -43,13 +40,13 @@ public class GameController : MonoBehaviour {
         UpdateCellGridState(null);
     }
 
-    void Update() {
-
-    }
-
     public void UpdateLevelAfterRotation(Coord cellCoord) {
         currentLevel.CellAt(cellCoord).RotateRight();
         UpdateCellGridState(null);
+
+        if (currentLevel.IsSolution()) {
+            Reload();
+        }
     }
 
     public void UpdateLevelBeforeRotation(Coord skipCoord) {
