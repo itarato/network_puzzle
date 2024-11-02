@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CellController : MonoBehaviour {
@@ -10,6 +11,8 @@ public class CellController : MonoBehaviour {
     private Level.Cell cell;
 
     public List<GameObject> paths;
+    public GameObject serverGameObject;
+    public GameObject clientGameObject;
     public Material onMaterial;
     public Material offMaterial;
     public float rotateTime = 0.2f;
@@ -23,8 +26,11 @@ public class CellController : MonoBehaviour {
 
     }
 
-    public void Initialize(Level.Cell cell, Coord coord, GameController gameController) {
+    public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
         TurnOff();
+
+        clientGameObject.SetActive(cell.isEnd && !sourceCellCoord.Equals(coord));
+        serverGameObject.SetActive(sourceCellCoord.Equals(coord));
 
         this.coord = coord;
         this.gameController = gameController;
@@ -42,6 +48,9 @@ public class CellController : MonoBehaviour {
         foreach (GameObject path in paths) {
             path.GetComponent<Renderer>().material = onMaterial;
         }
+        if (clientGameObject.activeSelf) {
+            clientGameObject.GetComponent<Renderer>().material = onMaterial;
+        }
     }
 
     public void TurnOff() {
@@ -50,6 +59,9 @@ public class CellController : MonoBehaviour {
 
         foreach (GameObject path in paths) {
             path.GetComponent<Renderer>().material = offMaterial;
+        }
+        if (clientGameObject.activeSelf) {
+            clientGameObject.GetComponent<Renderer>().material = offMaterial;
         }
     }
 

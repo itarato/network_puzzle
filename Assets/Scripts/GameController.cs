@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour {
 
                 CellController cellController = cellInstance.GetComponent<CellController>();
                 Coord cellCoord = new Coord(x, z);
-                cellController.Initialize(currentLevel.CellAt(cellCoord), cellCoord, this);
+                cellController.Initialize(currentLevel.CellAt(cellCoord), cellCoord, this, currentLevel.source);
             }
         }
 
