@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
     }
 
     void Reload() {
-        currentLevel = LevelGenerator.Generate(24, 16);
+        currentLevel = LevelGenerator.Generate(3, 3);
 
         foreach (var cellInstance in cellInstances) {
             Destroy(cellInstance.gameObject);
