@@ -1,20 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+//using UnityEngine;
 
 public class LevelGenerator {
     // North, east, south, west.
     static int[,] neighbourMap = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 
     public static Level Generate(int width, int height) {
-        List<Level.Cell> cells = new List<Level.Cell>();
-        cells.Add(new Level.Cell(new bool[] { false, true, false, false }));
-        cells.Add(new Level.Cell(new bool[] { false, false, true, true }));
-        cells.Add(new Level.Cell(new bool[] { false, true, false, false }));
-        cells.Add(new Level.Cell(new bool[] { true, false, false, true }));
-
-        Level level = new Level(2, 2, cells, new Coord(0, 0));
+        Level level = GenerateRandomLevel(width, height);
 
         for (int i = 0; i < 3; i++) {
             RandomizeLevel(level);
@@ -61,7 +55,7 @@ public class LevelGenerator {
                 neighbourCoords.Add(i, neighbourCoord);
             }
 
-            if (stemCount > 1) Debug.LogError("Stem count over 1");
+            //if (stemCount > 1) Debug.LogError("Stem count over 1");
 
             // Pick a few random (1-3).
             int newNeighbourCount = rnd.Next(Math.Min(1, neighbourCoords.Count), Math.Min(3, neighbourCoords.Count));
