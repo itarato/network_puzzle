@@ -38,6 +38,10 @@ public class Level {
             paths[2] = paths[1];
             paths[1] = oldNorth;
         }
+
+        public void GeneratorModeSetPath(int pathIndex) {
+            paths[pathIndex] = true;
+        }
     }
 
     public int width;
