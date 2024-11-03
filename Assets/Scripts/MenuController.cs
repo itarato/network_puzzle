@@ -6,8 +6,8 @@ using UnityEngine;
 public class MenuController : MonoBehaviour {
     public TMP_Dropdown levelsDropdown;
     public GameController gameController;
-    public Canvas menuUI;
-    public Canvas inGameUI;
+    public GameObject menuUI;
+    public TextMeshProUGUI titleText;
 
     private int selectedIndex = 0;
 
@@ -32,20 +32,29 @@ public class MenuController : MonoBehaviour {
         }
 
         levelsDropdown.AddOptions(options);
+        UpdateTitle();
     }
 
     public void OnClickStartButton() {
         Coord selectedCoord = levels[selectedIndex];
 
         gameController.Reload(selectedCoord);
-        menuUI.gameObject.SetActive(false);
+
+        menuUI.SetActive(false);
     }
 
     public void OnChangeLevelsDropdown(int selectedIndex) {
         this.selectedIndex = selectedIndex;
+        UpdateTitle();
     }
 
     public void OnClickExitGame() {
-        menuUI.gameObject.SetActive(true);
+        menuUI.SetActive(true);
+    }
+
+    private void UpdateTitle() {
+        Coord coord = levels[selectedIndex];
+        string name = "Map: " + coord.x + " x " + coord.y;
+        titleText.text = name;
     }
 }

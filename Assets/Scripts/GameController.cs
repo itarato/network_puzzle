@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public GameObject cellTemplate;
-    public Canvas menuUI;
+    public GameObject menuUI;
     public Camera mainCamera;
-
-    //public int www = 3;
-    //public int hhh = 3;
 
     private Level currentLevel;
     private List<GameObject> cellInstances = new List<GameObject>();
@@ -17,6 +14,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void Reload(Coord bounds) {
+        return;
+
         currentLevel = LevelGenerator.Generate(bounds.x, bounds.y);
 
         foreach (var cellInstance in cellInstances) {
@@ -57,13 +56,6 @@ public class GameController : MonoBehaviour {
             cameraHeight,
             mainCamera.transform.position.z
         );
-    }
-
-    void Update() {
-        //if (Input.GetKeyDown(KeyCode.Space)) {
-        //    Debug.Log("FIRE");
-        //    Reload(new Coord(www, hhh));
-        //}
     }
 
     public void UpdateLevelAfterRotation(Coord cellCoord) {
