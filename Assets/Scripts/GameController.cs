@@ -6,16 +6,16 @@ public class GameController : MonoBehaviour {
     public GameObject cellTemplate;
     public GameObject menuUI;
     public Camera mainCamera;
+    public ParticleSystem victoryParticleSystem;
 
     private Level currentLevel;
     private List<GameObject> cellInstances = new List<GameObject>();
 
     void Start() {
+        victoryParticleSystem.Stop();
     }
 
     public void Reload(Coord bounds) {
-        return;
-
         currentLevel = LevelGenerator.Generate(bounds.x, bounds.y);
 
         foreach (var cellInstance in cellInstances) {
@@ -63,8 +63,19 @@ public class GameController : MonoBehaviour {
         UpdateCellGridState(null);
 
         if (currentLevel.IsSolution()) {
-            menuUI.gameObject.SetActive(true);
+            foreach (var cellInstance in cellInstances) {
+                CellController cellController = cellInstance.GetComponent<CellController>();
+                cellController.GameOver();
+            }
+
+            victoryParticleSystem.Play();
+            Invoke(nameof(FinishGameAndOpenMenu), 3f);
         }
+    }
+
+    private void FinishGameAndOpenMenu() {
+        victoryParticleSystem.Stop();
+        menuUI.SetActive(true);
     }
 
     public void UpdateLevelBeforeRotation(Coord skipCoord) {
@@ -83,5 +94,14 @@ public class GameController : MonoBehaviour {
             CellController cellController = cellInstance.GetComponent<CellController>();
             cellController.TurnOn();
         }
+    }
+
+    public void OnShuffleLevel() {
+        // TODO
+    }
+
+    public void OnClickExitGame() {
+        CancelInvoke();
+        menuUI.SetActive(true);
     }
 }

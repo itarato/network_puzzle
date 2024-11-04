@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: f2fdc250e6429364882f07351ee93693
+  productGUID: fa6edf08204641b4ea4327e5436eb5b8
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: itarato
-  productName: NetworkPuzzle
+  companyName: DefaultCompany
+  productName: NewNetworkPuzzle
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -161,7 +161,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.PeterArato.NetworkPuzzle
+    Android: com.UnityTechnologies.com.unity.template.urpblank
     Standalone: com.Unity-Technologies.com.unity.template.urp-blank
     iPhone: com.Unity-Technologies.com.unity.template.urp-blank
   buildNumber:
@@ -183,7 +183,7 @@ PlayerSettings:
   CreateWallpaper: 0
   APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
-  StripUnusedMeshComponents: 1
+  StripUnusedMeshComponents: 0
   strictShaderVariantMatching: 0
   VertexChannelCompressionMask: 4054
   iPhoneSdkVersion: 988
@@ -839,14 +839,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: NetworkPuzzle
+  metroPackageName: NewNetworkPuzzle
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: NetworkPuzzle
+  metroApplicationDescription: NewNetworkPuzzle
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -916,10 +916,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 2a490301-c499-45bf-9b7f-3190f6c761e0
+  cloudProjectId: b27ec2f3-3f02-4e19-b69a-59de8ea7743e
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: NetworkPuzzle
+  projectName: NewNetworkPuzzle
   organizationId: itarato
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

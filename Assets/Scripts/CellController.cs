@@ -8,13 +8,15 @@ public class CellController : MonoBehaviour {
     private GameController gameController;
     private bool isOn = true;
     private Level.Cell cell;
+    private bool isGameOver = false;
 
     public List<GameObject> paths;
     public GameObject serverGameObject;
     public GameObject clientGameObject;
+    public GameObject pathsGameObjects;
     public Material onMaterial;
     public Material offMaterial;
-    public float rotateTime = 0.2f;
+    public float rotateTime = 0.14f;
 
     public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
         TurnOff();
@@ -55,8 +57,13 @@ public class CellController : MonoBehaviour {
         }
     }
 
+    public void GameOver() {
+        isGameOver = true;
+    }
+
     private void OnMouseDown() {
         if (isMoving) return;
+        if (isGameOver) return;
 
         isMoving = true;
         StartCoroutine(Rotate(rotateTime));
@@ -65,17 +72,22 @@ public class CellController : MonoBehaviour {
     private IEnumerator Rotate(float duration) {
         gameController.UpdateLevelBeforeRotation(coord);
 
-        Quaternion initialRotation = transform.rotation;
+        Quaternion initialRotation = pathsGameObjects.transform.rotation;
         Quaternion targetRotation = initialRotation * Quaternion.Euler(0f, 90f, 0f);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration) {
-            transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, elapsedTime / duration);
+            pathsGameObjects.transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        transform.rotation = targetRotation;
+        pathsGameObjects.transform.rotation = targetRotation;
+        pathsGameObjects.transform.position = new Vector3(
+            pathsGameObjects.transform.position.x,
+            0f,
+            pathsGameObjects.transform.position.z
+        );
         isMoving = false;
         gameController.UpdateLevelAfterRotation(coord);
     }

@@ -48,10 +48,6 @@ public class MenuController : MonoBehaviour {
         UpdateTitle();
     }
 
-    public void OnClickExitGame() {
-        menuUI.SetActive(true);
-    }
-
     private void UpdateTitle() {
         Coord coord = levels[selectedIndex];
         string name = "Map: " + coord.x + " x " + coord.y;
