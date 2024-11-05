@@ -11,10 +11,10 @@ public class CellController : MonoBehaviour {
     private bool isGameOver = false;
 
     public List<GameObject> paths;
-    public List<GameObject> joints;
     public GameObject serverGameObject;
     public GameObject clientGameObject;
     public GameObject pathsGameObjects;
+    public GameObject waterGameObject;
     public Material onMaterial;
     public Material offMaterial;
     public float rotateTime = 0.14f;
@@ -30,23 +30,16 @@ public class CellController : MonoBehaviour {
         this.cell = cell;
 
         for (int i = 0; i < paths.Count; i++) {
-            paths[i].SetActive(cell.paths[i]);
+            paths[i].SetActive(!cell.paths[i]);
         }
 
-        if (cell.isEnd || ((cell.paths[0] && cell.paths[2]) && !(cell.paths[1] || cell.paths[3])) || ((cell.paths[1] && cell.paths[3]) && !(cell.paths[0] || cell.paths[2]))) {
-            for (int i = 0; i < paths.Count; i++) {
-                joints[i].SetActive(false);
-            }
-        }
     }
 
     public void TurnOn() {
         if (isOn) return;
         isOn = true;
 
-        foreach (GameObject path in paths) {
-            path.GetComponent<Renderer>().material = onMaterial;
-        }
+        waterGameObject.SetActive(true);
         if (clientGameObject.activeSelf) {
             clientGameObject.GetComponent<Renderer>().material = onMaterial;
         }
@@ -56,9 +49,7 @@ public class CellController : MonoBehaviour {
         if (!isOn) return;
         isOn = false;
 
-        foreach (GameObject path in paths) {
-            path.GetComponent<Renderer>().material = offMaterial;
-        }
+        waterGameObject.SetActive(false);
         if (clientGameObject.activeSelf) {
             clientGameObject.GetComponent<Renderer>().material = offMaterial;
         }

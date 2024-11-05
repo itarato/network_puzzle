@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public GameObject cellTemplate;
+    public GameObject emptyCellTemplate;
     public GameObject menuUI;
     public Camera mainCamera;
     public ParticleSystem victoryParticleSystem;
@@ -31,12 +32,21 @@ public class GameController : MonoBehaviour {
                     transform.position.z + (currentLevel.height / 2f) - z - 0.5f
                 );
 
-                GameObject cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
+                Coord cellCoord = new Coord(x, z);
+                Level.Cell currentCell = currentLevel.CellAt(cellCoord);
+
+                GameObject cellInstance;
+                if (currentCell.isEmpty) {
+                    cellInstance = Instantiate(emptyCellTemplate, pos, Quaternion.identity);
+                } else {
+                    cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
+                }
                 cellInstances.Add(cellInstance);
 
                 CellController cellController = cellInstance.GetComponent<CellController>();
-                Coord cellCoord = new Coord(x, z);
-                cellController.Initialize(currentLevel.CellAt(cellCoord), cellCoord, this, currentLevel.source);
+                if (cellController != null) {
+                    cellController.Initialize(currentCell, cellCoord, this, currentLevel.source);
+                }
             }
         }
 
@@ -65,7 +75,9 @@ public class GameController : MonoBehaviour {
         if (currentLevel.IsSolution()) {
             foreach (var cellInstance in cellInstances) {
                 CellController cellController = cellInstance.GetComponent<CellController>();
-                cellController.GameOver();
+                if (cellController != null) {
+                    cellController.GameOver();
+                }
             }
 
             victoryParticleSystem.Play();
@@ -85,14 +97,18 @@ public class GameController : MonoBehaviour {
     private void UpdateCellGridState(Coord skipCoord) {
         foreach (var cellInstance in cellInstances) {
             CellController cellController = cellInstance.GetComponent<CellController>();
-            cellController.TurnOff();
+            if (cellController != null) {
+                cellController.TurnOff();
+            }
         }
 
         List<Coord> activeCells = currentLevel.ActiveCells(skipCoord);
         foreach (var activeCellCoord in activeCells) {
             GameObject cellInstance = cellInstances[activeCellCoord.y * currentLevel.width + activeCellCoord.x];
             CellController cellController = cellInstance.GetComponent<CellController>();
-            cellController.TurnOn();
+            if (cellController != null) {
+                cellController.TurnOn();
+            }
         }
     }
 

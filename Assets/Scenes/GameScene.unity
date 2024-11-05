@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &25998320
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6035,9 +6035,9 @@ RectTransform:
   - {fileID: 1638559562}
   m_Father: {fileID: 25998320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 88.36363, y: -261.2273}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &862864110
@@ -6250,6 +6250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellTemplate: {fileID: 2902519359746391468, guid: acfbce09d6b99de48910fc1adbba5138,
     type: 3}
+  emptyCellTemplate: {fileID: 2902519359746391468, guid: 67ded2fd7b5e96d42b9b3026642e686a,
+    type: 3}
   menuUI: {fileID: 25998319}
   mainCamera: {fileID: 330585545}
   victoryParticleSystem: {fileID: 311132306}
@@ -6437,9 +6439,9 @@ RectTransform:
   - {fileID: 1044096018}
   m_Father: {fileID: 25998320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 88.36363, y: -291.2273}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 80, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017694602
@@ -6778,9 +6780,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 25998320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 88.36363, y: -200.32727}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 167.4, y: 83.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1361157066

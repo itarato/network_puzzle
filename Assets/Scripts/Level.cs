@@ -11,6 +11,7 @@ public class Level {
          */
         public bool[] paths;
         public bool isEnd;
+        public bool isEmpty;
 
         public Cell(bool[] paths) {
             if (paths.Length != 4) {
@@ -19,6 +20,7 @@ public class Level {
 
             this.paths = paths;
             isEnd = (paths[0] ? 1 : 0) + (paths[1] ? 1 : 0) + (paths[2] ? 1 : 0) + (paths[3] ? 1 : 0) == 1;
+            isEmpty = !(paths[0] || paths[1] || paths[2] || paths[3]);
         }
 
         public void RotateLeft() {
