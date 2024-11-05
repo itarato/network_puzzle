@@ -101,6 +101,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void OnClickExitGame() {
+        victoryParticleSystem.Stop();
         CancelInvoke();
         menuUI.SetActive(true);
     }

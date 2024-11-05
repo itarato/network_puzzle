@@ -11,6 +11,7 @@ public class CellController : MonoBehaviour {
     private bool isGameOver = false;
 
     public List<GameObject> paths;
+    public List<GameObject> joints;
     public GameObject serverGameObject;
     public GameObject clientGameObject;
     public GameObject pathsGameObjects;
@@ -30,6 +31,12 @@ public class CellController : MonoBehaviour {
 
         for (int i = 0; i < paths.Count; i++) {
             paths[i].SetActive(cell.paths[i]);
+        }
+
+        if (cell.isEnd || ((cell.paths[0] && cell.paths[2]) && !(cell.paths[1] || cell.paths[3])) || ((cell.paths[1] && cell.paths[3]) && !(cell.paths[0] || cell.paths[2]))) {
+            for (int i = 0; i < paths.Count; i++) {
+                joints[i].SetActive(false);
+            }
         }
     }
 
