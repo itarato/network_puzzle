@@ -9,6 +9,7 @@ public class CellController : MonoBehaviour {
     private bool isOn = true;
     private Level.Cell cell;
     private bool isGameOver = false;
+    private bool isClient = false;
 
     public List<GameObject> paths;
     public GameObject serverGameObject;
@@ -22,7 +23,9 @@ public class CellController : MonoBehaviour {
     public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
         TurnOff();
 
-        clientGameObject.SetActive(cell.isEnd && !sourceCellCoord.Equals(coord));
+        isClient = cell.isEnd && !sourceCellCoord.Equals(coord);
+
+        clientGameObject.SetActive(false);
         serverGameObject.SetActive(sourceCellCoord.Equals(coord));
 
         this.coord = coord;
@@ -40,8 +43,8 @@ public class CellController : MonoBehaviour {
         isOn = true;
 
         waterGameObject.SetActive(true);
-        if (clientGameObject.activeSelf) {
-            clientGameObject.GetComponent<Renderer>().material = onMaterial;
+        if (isClient) {
+            clientGameObject.SetActive(true);
         }
     }
 
@@ -50,9 +53,7 @@ public class CellController : MonoBehaviour {
         isOn = false;
 
         waterGameObject.SetActive(false);
-        if (clientGameObject.activeSelf) {
-            clientGameObject.GetComponent<Renderer>().material = offMaterial;
-        }
+        clientGameObject.SetActive(false);
     }
 
     public void GameOver() {
