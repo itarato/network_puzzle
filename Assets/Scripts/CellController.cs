@@ -22,8 +22,6 @@ public class CellController : MonoBehaviour {
     public float rotateTime = 0.14f;
 
     public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
-        TurnOff();
-
         isClient = cell.isEnd && !sourceCellCoord.Equals(coord);
 
         clientOnGameObject.SetActive(false);
@@ -38,6 +36,19 @@ public class CellController : MonoBehaviour {
             paths[i].SetActive(!cell.paths[i]);
         }
 
+        if (isClient) {
+            float clientRotation = 0f;
+            if (cell.paths[0]) clientRotation = 0f;
+            else if (cell.paths[1]) clientRotation = 90f;
+            else if (cell.paths[2]) clientRotation = 180f;
+            else if (cell.paths[3]) clientRotation = 270f;
+            else Debug.Log("Invalid client");
+
+            clientOnGameObject.transform.rotation = Quaternion.Euler(new Vector3(0f, clientRotation, 0f));
+            clientOffGameObject.transform.rotation = Quaternion.Euler(new Vector3(0f, clientRotation, 0f));
+        }
+
+        TurnOff();
     }
 
     public void TurnOn() {
