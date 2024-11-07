@@ -48,7 +48,7 @@ public class CellController : MonoBehaviour {
             path.GetComponent<Renderer>().material = onMaterial;
         }
         if (clientGameObject.activeSelf) {
-            clientGameObject.GetComponent<Renderer>().material = onMaterial;
+            //clientGameObject.GetComponent<Renderer>().material = onMaterial;
         }
     }
 
@@ -60,7 +60,7 @@ public class CellController : MonoBehaviour {
             path.GetComponent<Renderer>().material = offMaterial;
         }
         if (clientGameObject.activeSelf) {
-            clientGameObject.GetComponent<Renderer>().material = offMaterial;
+            //clientGameObject.GetComponent<Renderer>().material = offMaterial;
         }
     }
 

@@ -45,17 +45,9 @@ public class GameController : MonoBehaviour {
     }
 
     private void UpdateCameraForView(Coord coord) {
-        // 3.upto(16).map { [_1, (1 + (_1 / 13.0) * 26).round] }.to_h 
-        float minCameraYFromWidth = 1f + (coord.x / 13f) * 26f;
         // 6.upto(32).map { [_1, (1 + (_1 / 26.0) * 26).round] }.to_h 
-        float minCameraYFromHeight = 1f + (coord.x / 26f) * 26f;
-
-        float cameraHeight = Mathf.Max(minCameraYFromHeight, minCameraYFromWidth);
-        mainCamera.transform.position = new Vector3(
-            mainCamera.transform.position.x,
-            cameraHeight,
-            mainCamera.transform.position.z
-        );
+        float minCameraYFromHeight = 3.5f + ((coord.x - 3f) / 13f) * 15.5f;
+        mainCamera.orthographicSize = minCameraYFromHeight;
     }
 
     public void UpdateLevelAfterRotation(Coord cellCoord) {
