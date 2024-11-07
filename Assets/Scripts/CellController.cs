@@ -13,7 +13,8 @@ public class CellController : MonoBehaviour {
 
     public List<GameObject> paths;
     public GameObject serverGameObject;
-    public GameObject clientGameObject;
+    public GameObject clientOnGameObject;
+    public GameObject clientOffGameObject;
     public GameObject pathsGameObjects;
     public GameObject waterGameObject;
     public Material onMaterial;
@@ -25,7 +26,8 @@ public class CellController : MonoBehaviour {
 
         isClient = cell.isEnd && !sourceCellCoord.Equals(coord);
 
-        clientGameObject.SetActive(false);
+        clientOnGameObject.SetActive(false);
+        clientOffGameObject.SetActive(false);
         serverGameObject.SetActive(sourceCellCoord.Equals(coord));
 
         this.coord = coord;
@@ -44,7 +46,8 @@ public class CellController : MonoBehaviour {
 
         waterGameObject.SetActive(true);
         if (isClient) {
-            clientGameObject.SetActive(true);
+            clientOnGameObject.SetActive(true);
+            clientOffGameObject.SetActive(true);
         }
     }
 
@@ -53,7 +56,10 @@ public class CellController : MonoBehaviour {
         isOn = false;
 
         waterGameObject.SetActive(false);
-        clientGameObject.SetActive(false);
+        if (isClient) {
+            clientOnGameObject.SetActive(false);
+            clientOffGameObject.SetActive(true);
+        }
     }
 
     public void GameOver() {
