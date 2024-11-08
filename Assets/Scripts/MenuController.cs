@@ -13,14 +13,11 @@ public class MenuController : MonoBehaviour {
 
     List<Coord> levels = new List<Coord>{
         new Coord(3, 3),
-        new Coord(3, 6),
-        new Coord(4, 8),
-        new Coord(6, 12),
-        new Coord(8, 16),
-        new Coord(10, 20),
-        new Coord(12, 24),
-        new Coord(14, 28),
-        new Coord(16, 32),
+        new Coord(3, 5),
+        new Coord(4, 4),
+        new Coord(6, 8),
+        new Coord(9, 12),
+        new Coord(10, 18),
     };
 
     // Start is called before the first frame update

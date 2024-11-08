@@ -45,8 +45,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void UpdateCameraForView(Coord coord) {
-        // 6.upto(32).map { [_1, (1 + (_1 / 26.0) * 26).round] }.to_h 
-        float minCameraYFromHeight = 3.5f + ((coord.x - 3f) / 13f) * 15.5f;
+        float minCameraYFromHeight = 3.25f + ((coord.x - 3f) / 7f) * 7.25f;
         mainCamera.orthographicSize = minCameraYFromHeight;
     }
 
