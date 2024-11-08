@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour {
     public GameObject menuUI;
     public TextMeshProUGUI titleText;
 
-    private int selectedIndex = 0;
+    private int selectedIndex = 1;
 
     List<Coord> levels = new List<Coord>{
         new Coord(3, 3),
