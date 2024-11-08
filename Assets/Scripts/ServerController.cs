@@ -17,10 +17,12 @@ public class ServerController : MonoBehaviour {
     void Update() {
         if (!gameObject.activeSelf) return;
 
-        foreach (Light light in lights) {
-            if (Random.Range(0, 100) < 1) {
-                light.gameObject.SetActive(!light.gameObject.activeSelf);
+        int randIndex = Random.Range(0, 100);
+        if (randIndex < lights.Count) {
+            foreach (Light light in lights) {
+                light.gameObject.SetActive(false);
             }
+            lights[randIndex].gameObject.SetActive(true);
         }
     }
 }

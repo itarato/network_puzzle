@@ -9,20 +9,23 @@ public class CellController : MonoBehaviour {
     private bool isOn = true;
     private Level.Cell cell;
     private bool isGameOver = false;
+    private bool isClient = false;
 
     public List<GameObject> paths;
     public List<GameObject> joints;
     public GameObject serverGameObject;
     public GameObject clientGameObject;
+    public Light clientLight;
     public GameObject pathsGameObjects;
     public Material onMaterial;
     public Material offMaterial;
     public float rotateTime = 0.14f;
 
     public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
-        TurnOff();
+        isClient = cell.isEnd && !sourceCellCoord.Equals(coord);
 
-        clientGameObject.SetActive(cell.isEnd && !sourceCellCoord.Equals(coord));
+        clientGameObject.SetActive(isClient);
+        clientLight.gameObject.SetActive(false);
         serverGameObject.SetActive(sourceCellCoord.Equals(coord));
 
         this.coord = coord;
@@ -38,6 +41,8 @@ public class CellController : MonoBehaviour {
                 joints[i].SetActive(false);
             }
         }
+
+        TurnOff();
     }
 
     public void TurnOn() {
@@ -47,8 +52,8 @@ public class CellController : MonoBehaviour {
         foreach (GameObject path in paths) {
             path.GetComponent<Renderer>().material = onMaterial;
         }
-        if (clientGameObject.activeSelf) {
-            //clientGameObject.GetComponent<Renderer>().material = onMaterial;
+        if (isClient) {
+            clientLight.gameObject.SetActive(true);
         }
     }
 
@@ -59,8 +64,8 @@ public class CellController : MonoBehaviour {
         foreach (GameObject path in paths) {
             path.GetComponent<Renderer>().material = offMaterial;
         }
-        if (clientGameObject.activeSelf) {
-            //clientGameObject.GetComponent<Renderer>().material = offMaterial;
+        if (isClient) {
+            clientLight.gameObject.SetActive(false);
         }
     }
 
