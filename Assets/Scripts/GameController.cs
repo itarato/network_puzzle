@@ -7,15 +7,21 @@ public class GameController : MonoBehaviour {
     public GameObject menuUI;
     public Camera mainCamera;
     public ParticleSystem victoryParticleSystem;
+    public AudioSource victoryAudioSource;
+    public AudioSource newLevelAudioSource;
 
     private Level currentLevel;
     private List<GameObject> cellInstances = new List<GameObject>();
+
+    private Coord lastUsedBounds = new Coord(3, 3);
 
     void Start() {
         victoryParticleSystem.Stop();
     }
 
     public void Reload(Coord bounds) {
+        victoryParticleSystem.Stop();
+        lastUsedBounds = bounds;
         currentLevel = LevelGenerator.Generate(bounds.x, bounds.y);
 
         foreach (var cellInstance in cellInstances) {
@@ -42,6 +48,8 @@ public class GameController : MonoBehaviour {
 
         UpdateCellGridState(null);
         UpdateCameraForView(bounds);
+
+        newLevelAudioSource.Play();
     }
 
     private void UpdateCameraForView(Coord coord) {
@@ -63,6 +71,8 @@ public class GameController : MonoBehaviour {
         UpdateCellGridState(null);
 
         if (currentLevel.IsSolution()) {
+            victoryAudioSource.Play();
+
             foreach (var cellInstance in cellInstances) {
                 CellController cellController = cellInstance.GetComponent<CellController>();
                 cellController.GameOver();
@@ -100,5 +110,10 @@ public class GameController : MonoBehaviour {
         victoryParticleSystem.Stop();
         CancelInvoke();
         menuUI.SetActive(true);
+    }
+
+    public void OnClickRegenerateLevel() {
+        CancelInvoke();
+        Reload(lastUsedBounds);
     }
 }

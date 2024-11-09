@@ -21,6 +21,8 @@ public class CellController : MonoBehaviour {
     public Material offMaterial;
     public float rotateTime = 0.14f;
 
+    public AudioSource rotateAudioSource;
+
     public void Initialize(Level.Cell cell, Coord coord, GameController gameController, Coord sourceCellCoord) {
         isClient = cell.isEnd && !sourceCellCoord.Equals(coord);
 
@@ -78,6 +80,7 @@ public class CellController : MonoBehaviour {
         if (isGameOver) return;
 
         isMoving = true;
+        rotateAudioSource.Play();
         StartCoroutine(Rotate(rotateTime));
     }
 
