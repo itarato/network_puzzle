@@ -47,6 +47,15 @@ public class GameController : MonoBehaviour {
     private void UpdateCameraForView(Coord coord) {
         float minCameraYFromHeight = 3.25f + ((coord.x - 3f) / 7f) * 7.25f;
         mainCamera.orthographicSize = minCameraYFromHeight;
+        
+        victoryParticleSystem.gameObject.transform.position = new Vector3(
+            victoryParticleSystem.gameObject.transform.position.x,
+            victoryParticleSystem.gameObject.transform.position.y,
+            minCameraYFromHeight
+        );
+
+        float particleScale = minCameraYFromHeight / 3.25f;
+        victoryParticleSystem.gameObject.transform.localScale = new Vector3(particleScale, particleScale, particleScale);
     }
 
     public void UpdateLevelAfterRotation(Coord cellCoord) {
@@ -85,10 +94,6 @@ public class GameController : MonoBehaviour {
             CellController cellController = cellInstance.GetComponent<CellController>();
             cellController.TurnOn();
         }
-    }
-
-    public void OnShuffleLevel() {
-        // TODO
     }
 
     public void OnClickExitGame() {
