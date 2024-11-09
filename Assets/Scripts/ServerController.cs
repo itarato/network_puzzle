@@ -17,7 +17,7 @@ public class ServerController : MonoBehaviour {
     void Update() {
         if (!gameObject.activeSelf) return;
 
-        int randIndex = Random.Range(0, 100);
+        int randIndex = Random.Range(0, 50);
         if (randIndex < lights.Count) {
             foreach (Light light in lights) {
                 light.gameObject.SetActive(false);
