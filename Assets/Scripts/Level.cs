@@ -49,16 +49,18 @@ public class Level {
     public List<Cell> cells;
     public Coord source;
 
+    private bool isAcrossBorders;
     private List<Coord> endCellCoordsCache = new List<Coord>();
 
     // North, east, south, west.
     static int[,] neighbourMap = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 
-    public Level(int width, int height, List<Cell> cells, Coord source) {
+    public Level(int width, int height, List<Cell> cells, Coord source, bool isAcrossBorders) {
         this.width = width;
         this.height = height;
         this.cells = cells;
         this.source = source;
+        this.isAcrossBorders = isAcrossBorders;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -116,7 +118,15 @@ public class Level {
         List<Coord> neighbours = new List<Coord>();
 
         for (int i = 0; i < 4; i++) {
-            Coord neighbourCoord = new Coord(coord.x + neighbourMap[i, 0], coord.y + neighbourMap[i, 1]);
+            Coord neighbourCoord;
+            if (isAcrossBorders) {
+                neighbourCoord = new Coord(
+                    (coord.x + neighbourMap[i, 0] + width) % width, 
+                    (coord.y + neighbourMap[i, 1] + height) % height
+                );
+            } else {
+                neighbourCoord = new Coord(coord.x + neighbourMap[i, 0], coord.y + neighbourMap[i, 1]);
+            }
             neighbours.Add(neighbourCoord);
         }
 

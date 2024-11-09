@@ -14,15 +14,18 @@ public class GameController : MonoBehaviour {
     private List<GameObject> cellInstances = new List<GameObject>();
 
     private Coord lastUsedBounds = new Coord(3, 3);
+    private bool lastIsAcrossBorders = false;
 
     void Start() {
         victoryParticleSystem.Stop();
     }
 
-    public void Reload(Coord bounds) {
-        victoryParticleSystem.Stop();
+    public void Reload(Coord bounds, bool isAcrossBorders) {
         lastUsedBounds = bounds;
-        currentLevel = LevelGenerator.Generate(bounds.x, bounds.y);
+        lastIsAcrossBorders = isAcrossBorders;
+
+        victoryParticleSystem.Stop();
+        currentLevel = LevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
 
         foreach (var cellInstance in cellInstances) {
             Destroy(cellInstance.gameObject);
@@ -55,7 +58,7 @@ public class GameController : MonoBehaviour {
     private void UpdateCameraForView(Coord coord) {
         float minCameraYFromHeight = 3.25f + ((coord.x - 3f) / 7f) * 7.25f;
         mainCamera.orthographicSize = minCameraYFromHeight;
-        
+
         victoryParticleSystem.gameObject.transform.position = new Vector3(
             victoryParticleSystem.gameObject.transform.position.x,
             victoryParticleSystem.gameObject.transform.position.y,
@@ -114,6 +117,6 @@ public class GameController : MonoBehaviour {
 
     public void OnClickRegenerateLevel() {
         CancelInvoke();
-        Reload(lastUsedBounds);
+        Reload(lastUsedBounds, lastIsAcrossBorders);
     }
 }

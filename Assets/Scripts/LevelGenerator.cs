@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-//using UnityEngine;
 
 public class LevelGenerator {
     // North, east, south, west.
     static int[,] neighbourMap = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 
-    public static Level Generate(int width, int height) {
-        Level level = GenerateRandomLevel(width, height);
+    public static Level Generate(int width, int height, bool isAcrossBorders) {
+        Level level = GenerateRandomLevel(width, height, isAcrossBorders);
 
         for (int i = 0; i < 3; i++) {
             RandomizeLevel(level);
@@ -18,7 +17,7 @@ public class LevelGenerator {
         return level;
     }
 
-    private static Level GenerateRandomLevel(int width, int height) {
+    private static Level GenerateRandomLevel(int width, int height, bool isAcrossBorders) {
         System.Random rnd = new System.Random();
         Coord sourceCoord = new Coord(rnd.Next(0, width), rnd.Next(0, height));
 
@@ -34,7 +33,19 @@ public class LevelGenerator {
             Dictionary<int, Coord> neighbourCoords = new Dictionary<int, Coord>();
             int stemCount = 0;
             for (int i = 0; i < 4; i++) {
-                Coord neighbourCoord = new Coord(currentCoord.x + neighbourMap[i, 0], currentCoord.y + neighbourMap[i, 1]);
+                Coord neighbourCoord;
+
+                if (isAcrossBorders) {
+                    neighbourCoord = new Coord(
+                        (currentCoord.x + neighbourMap[i, 0] + width) % width,
+                        (currentCoord.y + neighbourMap[i, 1] + height) % height
+                    );
+                } else {
+                    neighbourCoord = new Coord(
+                        currentCoord.x + neighbourMap[i, 0],
+                        currentCoord.y + neighbourMap[i, 1]
+                    );
+                }
                 int neighbourCoordIndex = neighbourCoord.y * width + neighbourCoord.x;
 
                 if (neighbourCoord.x < 0 || neighbourCoord.y < 0 || neighbourCoord.x >= width || neighbourCoord.y >= height) {
@@ -54,8 +65,6 @@ public class LevelGenerator {
 
                 neighbourCoords.Add(i, neighbourCoord);
             }
-
-            //if (stemCount > 1) Debug.LogError("Stem count over 1");
 
             // Pick a few random (1-3).
             int newNeighbourCount = rnd.Next(Math.Min(1, neighbourCoords.Count), Math.Min(3, neighbourCoords.Count));
@@ -89,7 +98,7 @@ public class LevelGenerator {
             }));
         }
 
-        Level level = new Level(width, height, cells, sourceCoord);
+        Level level = new Level(width, height, cells, sourceCoord, isAcrossBorders);
         return level;
     }
 

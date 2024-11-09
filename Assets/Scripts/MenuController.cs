@@ -10,6 +10,7 @@ public class MenuController : MonoBehaviour {
     public TextMeshProUGUI titleText;
 
     private int selectedIndex = 1;
+    private bool isAcrossBorders = false;
 
     List<Coord> levels = new List<Coord>{
         new Coord(3, 3),
@@ -35,7 +36,7 @@ public class MenuController : MonoBehaviour {
     public void OnClickStartButton() {
         Coord selectedCoord = levels[selectedIndex];
 
-        gameController.Reload(selectedCoord);
+        gameController.Reload(selectedCoord, isAcrossBorders);
 
         menuUI.SetActive(false);
     }
@@ -43,6 +44,10 @@ public class MenuController : MonoBehaviour {
     public void OnChangeLevelsDropdown(int selectedIndex) {
         this.selectedIndex = selectedIndex;
         UpdateTitle();
+    }
+
+    public void OnToggleAcrossBorders(bool newValue) {
+        isAcrossBorders = newValue;
     }
 
     private void UpdateTitle() {
