@@ -36,7 +36,7 @@ public class MenuController : MonoBehaviour {
     public void OnClickStartButton() {
         Coord selectedCoord = levels[selectedIndex];
 
-        gameController.Reload(selectedCoord, isAcrossBorders);
+        gameController.Reload(selectedCoord, isAcrossBorders, CellType.Square);
 
         menuUI.SetActive(false);
     }

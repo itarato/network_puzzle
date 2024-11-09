@@ -10,21 +10,27 @@ public class GameController : MonoBehaviour {
     public AudioSource victoryAudioSource;
     public AudioSource newLevelAudioSource;
 
-    private Level currentLevel;
+    private ILevel currentLevel;
     private List<GameObject> cellInstances = new List<GameObject>();
 
     private Coord lastUsedBounds = new Coord(3, 3);
     private bool lastIsAcrossBorders = false;
+    private CellType lastCellType = CellType.Square;
 
     void Start() {
         victoryParticleSystem.Stop();
     }
 
-    public void Reload(Coord bounds, bool isAcrossBorders) {
+    public void Reload(Coord bounds, bool isAcrossBorders, CellType cellType) {
         lastUsedBounds = bounds;
         lastIsAcrossBorders = isAcrossBorders;
+        lastCellType = cellType;
 
-        currentLevel = LevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
+        if (cellType == CellType.Square) {
+            currentLevel = LevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
+        } else if (cellType == CellType.Hex) {
+            currentLevel = HexLevelGenerator.Generate(bounds.x, bounds.y);
+        }
 
         CleanupLevel();
 
@@ -39,7 +45,7 @@ public class GameController : MonoBehaviour {
                 GameObject cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
                 cellInstances.Add(cellInstance);
 
-                CellController cellController = cellInstance.GetComponent<CellController>();
+                ICellController cellController = cellInstance.GetComponent<ICellController>();
                 Coord cellCoord = new Coord(x, z);
                 cellController.Initialize(currentLevel.CellAt(cellCoord), cellCoord, this, currentLevel.source);
             }
@@ -73,7 +79,7 @@ public class GameController : MonoBehaviour {
             victoryAudioSource.Play();
 
             foreach (var cellInstance in cellInstances) {
-                CellController cellController = cellInstance.GetComponent<CellController>();
+                ICellController cellController = cellInstance.GetComponent<ICellController>();
                 cellController.GameOver();
             }
 
@@ -93,14 +99,14 @@ public class GameController : MonoBehaviour {
 
     private void UpdateCellGridState(Coord skipCoord) {
         foreach (var cellInstance in cellInstances) {
-            CellController cellController = cellInstance.GetComponent<CellController>();
+            ICellController cellController = cellInstance.GetComponent<ICellController>();
             cellController.TurnOff();
         }
 
         List<Coord> activeCells = currentLevel.ActiveCells(skipCoord);
         foreach (var activeCellCoord in activeCells) {
             GameObject cellInstance = cellInstances[activeCellCoord.y * currentLevel.width + activeCellCoord.x];
-            CellController cellController = cellInstance.GetComponent<CellController>();
+            ICellController cellController = cellInstance.GetComponent<ICellController>();
             cellController.TurnOn();
         }
     }
@@ -114,7 +120,7 @@ public class GameController : MonoBehaviour {
 
     public void OnClickRegenerateLevel() {
         CancelInvoke();
-        Reload(lastUsedBounds, lastIsAcrossBorders);
+        Reload(lastUsedBounds, lastIsAcrossBorders, lastCellType);
     }
 
     private void CleanupLevel() {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellController : MonoBehaviour, ICellController {
+public class HexCellController : MonoBehaviour, ICellController {
     private bool isMoving = false;
     private Coord coord;
     private GameController gameController;
@@ -19,7 +19,7 @@ public class CellController : MonoBehaviour, ICellController {
     public GameObject pathsGameObjects;
     public Material onMaterial;
     public Material offMaterial;
-    public float rotateTime = 0.14f;
+    public float rotateTime = 0.2f;
     public GameObject cellBaseGameObject;
     public Material emptyCellMaterial;
 
@@ -40,7 +40,7 @@ public class CellController : MonoBehaviour, ICellController {
             paths[i].SetActive(cell.paths[i]);
         }
 
-        if (cell.isEnd || ((cell.paths[0] && cell.paths[2]) && !(cell.paths[1] || cell.paths[3])) || ((cell.paths[1] && cell.paths[3]) && !(cell.paths[0] || cell.paths[2]))) {
+        if (cell.isEnd || cell.isStraight) {
             for (int i = 0; i < paths.Count; i++) {
                 joints[i].SetActive(false);
             }
@@ -95,7 +95,7 @@ public class CellController : MonoBehaviour, ICellController {
         gameController.UpdateLevelBeforeRotation(coord);
 
         Quaternion initialRotation = pathsGameObjects.transform.rotation;
-        Quaternion targetRotation = initialRotation * Quaternion.Euler(0f, 90f, 0f);
+        Quaternion targetRotation = initialRotation * Quaternion.Euler(0f, 60f, 0f);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration) {
