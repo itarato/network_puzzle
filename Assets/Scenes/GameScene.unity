@@ -8489,8 +8489,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Network Puzzle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7df026588363bda44837d122de3cc918, type: 2}
-  m_sharedMaterial: {fileID: 8959315344408181448, guid: 7df026588363bda44837d122de3cc918,
+  m_fontAsset: {fileID: 11400000, guid: 20191af9ecea4c74a989fa4facb6718f, type: 2}
+  m_sharedMaterial: {fileID: 8959315344408181448, guid: 20191af9ecea4c74a989fa4facb6718f,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

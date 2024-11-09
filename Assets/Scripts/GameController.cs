@@ -24,13 +24,9 @@ public class GameController : MonoBehaviour {
         lastUsedBounds = bounds;
         lastIsAcrossBorders = isAcrossBorders;
 
-        victoryParticleSystem.Stop();
         currentLevel = LevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
 
-        foreach (var cellInstance in cellInstances) {
-            Destroy(cellInstance.gameObject);
-        }
-        cellInstances.Clear();
+        CleanupLevel();
 
         for (int z = 0; z < currentLevel.height; z++) {
             for (int x = 0; x < currentLevel.width; x++) {
@@ -87,7 +83,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void FinishGameAndOpenMenu() {
-        victoryParticleSystem.Stop();
+        CleanupLevel();
         menuUI.SetActive(true);
     }
 
@@ -110,13 +106,22 @@ public class GameController : MonoBehaviour {
     }
 
     public void OnClickExitGame() {
-        victoryParticleSystem.Stop();
         CancelInvoke();
+        CleanupLevel();
+
         menuUI.SetActive(true);
     }
 
     public void OnClickRegenerateLevel() {
         CancelInvoke();
         Reload(lastUsedBounds, lastIsAcrossBorders);
+    }
+
+    private void CleanupLevel() {
+        foreach (var cellInstance in cellInstances) {
+            Destroy(cellInstance.gameObject);
+        }
+        cellInstances.Clear();
+        victoryParticleSystem.Stop();
     }
 }
