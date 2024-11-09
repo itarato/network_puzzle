@@ -20,6 +20,8 @@ public class CellController : MonoBehaviour {
     public Material onMaterial;
     public Material offMaterial;
     public float rotateTime = 0.14f;
+    public GameObject cellBaseGameObject;
+    public Material emptyCellMaterial;
 
     public AudioSource rotateAudioSource;
 
@@ -42,6 +44,10 @@ public class CellController : MonoBehaviour {
             for (int i = 0; i < paths.Count; i++) {
                 joints[i].SetActive(false);
             }
+        }
+
+        if (cell.isEmpty) {
+            cellBaseGameObject.GetComponent<Renderer>().material = emptyCellMaterial;
         }
 
         TurnOff();
@@ -78,6 +84,7 @@ public class CellController : MonoBehaviour {
     private void OnMouseDown() {
         if (isMoving) return;
         if (isGameOver) return;
+        if (cell.isEmpty) return;
 
         isMoving = true;
         rotateAudioSource.Play();

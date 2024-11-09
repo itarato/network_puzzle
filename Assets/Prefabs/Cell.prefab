@@ -289,6 +289,8 @@ MonoBehaviour:
   onMaterial: {fileID: 2100000, guid: 1b3899a6022c33c4b8454598bbbef273, type: 2}
   offMaterial: {fileID: 2100000, guid: 0e84771d617ecaf45834881ba9983c4b, type: 2}
   rotateTime: 0.14
+  cellBaseGameObject: {fileID: 997041541531177546}
+  emptyCellMaterial: {fileID: 2100000, guid: c9df27c2f046bc845bfaf03ff00e0d0a, type: 2}
   rotateAudioSource: {fileID: 589386377177788566}
 --- !u!82 &589386377177788566
 AudioSource:
@@ -1620,6 +1622,12 @@ PrefabInstance:
 --- !u!4 &476787082400254192 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d01ed746de791dd4ea645c1ab92dc75f,
+    type: 3}
+  m_PrefabInstance: {fileID: 78630673078497051}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &997041541531177546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d01ed746de791dd4ea645c1ab92dc75f,
     type: 3}
   m_PrefabInstance: {fileID: 78630673078497051}
   m_PrefabAsset: {fileID: 0}

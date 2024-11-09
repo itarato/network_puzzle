@@ -25,7 +25,7 @@ public class MenuController : MonoBehaviour {
     void Start() {
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
         foreach (Coord coord in levels) {
-            string name = coord.x + " x " + coord.y;
+            string name = coord.x + " x " + coord.y + " board";
             options.Add(new TMP_Dropdown.OptionData(name));
         }
 
