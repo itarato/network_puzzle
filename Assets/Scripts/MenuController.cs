@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
     public TMP_Dropdown levelsDropdown;
     public GameController gameController;
     public GameObject menuUI;
     public TextMeshProUGUI titleText;
+    public GameObject acrossBordersToggleGameObject;
 
     private int selectedIndex = 1;
     private bool isAcrossBorders = false;
+    private CellType cellType = CellType.Square;
 
     List<Coord> levels = new List<Coord>{
         new Coord(3, 3),
@@ -36,7 +39,7 @@ public class MenuController : MonoBehaviour {
     public void OnClickStartButton() {
         Coord selectedCoord = levels[selectedIndex];
 
-        gameController.Reload(selectedCoord, isAcrossBorders, CellType.Hex);
+        gameController.Reload(selectedCoord, isAcrossBorders, cellType);
 
         menuUI.SetActive(false);
     }
@@ -54,5 +57,15 @@ public class MenuController : MonoBehaviour {
         Coord coord = levels[selectedIndex];
         string name = "Map: " + coord.x + " x " + coord.y;
         titleText.text = name;
+    }
+
+    public void OnClickSquareToggle(bool value) {
+        cellType = CellType.Square;
+        acrossBordersToggleGameObject.SetActive(true);
+    }
+
+    public void OnClickHexToggle(bool value) {
+        cellType = CellType.Hex;
+        acrossBordersToggleGameObject.SetActive(false);
     }
 }

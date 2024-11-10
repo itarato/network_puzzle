@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour {
     private bool lastIsAcrossBorders = false;
     private CellType lastCellType = CellType.Square;
 
+    private const float hexCellWidth = 0.86602f;
+
     void Start() {
         victoryParticleSystem.Stop();
     }
@@ -37,11 +39,21 @@ public class GameController : MonoBehaviour {
 
         for (int z = 0; z < currentLevel.height; z++) {
             for (int x = 0; x < currentLevel.width; x++) {
-                Vector3 pos = new Vector3(
-                    transform.position.x - (currentLevel.width / 2f) + x + 0.5f,
-                    transform.position.y,
-                    transform.position.z + (currentLevel.height / 2f) - z - 0.5f
-                );
+                Vector3 pos;
+
+                if (cellType == CellType.Square) {
+                    pos = new Vector3(
+                        transform.position.x - (currentLevel.width / 2f) + x + 0.5f,
+                        transform.position.y,
+                        transform.position.z + (currentLevel.height / 2f) - z - 0.5f
+                    );
+                } else {
+                    pos = new Vector3(
+                        transform.position.x - (currentLevel.width * hexCellWidth / 2f) + x * hexCellWidth - (hexCellWidth / 2f) * (z % 2) + (hexCellWidth * 0.75f),
+                        transform.position.y,
+                        transform.position.z + (currentLevel.height * 0.75f / 2f) - (0.75f * z) - 0.375f
+                    );
+                }
 
                 GameObject cellInstance;
                 if (cellType == CellType.Square) {
