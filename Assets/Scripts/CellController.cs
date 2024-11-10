@@ -40,8 +40,8 @@ public class CellController : MonoBehaviour, ICellController {
             paths[i].SetActive(cell.paths[i]);
         }
 
-        if (cell.isEnd || ((cell.paths[0] && cell.paths[2]) && !(cell.paths[1] || cell.paths[3])) || ((cell.paths[1] && cell.paths[3]) && !(cell.paths[0] || cell.paths[2]))) {
-            for (int i = 0; i < paths.Count; i++) {
+        if (cell.isEnd || cell.isStraight) {
+            for (int i = 0; i < joints.Count; i++) {
                 joints[i].SetActive(false);
             }
         }
