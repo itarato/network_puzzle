@@ -26,12 +26,12 @@ public class Level : ILevel {
             for (int i = 0; i < 4; i++) {
                 if (paths[i]) {
                     unitSum++;
-                    squareSum += 2 << i;
+                    squareSum += 1 << i;
                 }
             }
             isEnd = unitSum == 1;
             isEmpty = unitSum == 0;
-            isStraight = squareSum == 4 || squareSum == 6;
+            isStraight = squareSum == 5 || squareSum == 10;
         }
 
         public void RotateLeft() {

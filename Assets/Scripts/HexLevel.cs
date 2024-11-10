@@ -28,7 +28,7 @@ public class HexLevel : ILevel {
             for (int i = 0; i < 6; i++) {
                 if (paths[i]) {
                     unitSum++;
-                    squareSum += 2 << i;
+                    squareSum += 1 << i;
                 }
             }
             isEnd = unitSum == 1;
