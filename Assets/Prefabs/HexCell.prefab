@@ -243,9 +243,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3159730462695402720}
-  - component: {fileID: -5709780137705848068}
   - component: {fileID: 589386377177788566}
   - component: {fileID: 5560511597897161082}
+  - component: {fileID: 4231806645565355612}
   m_Layer: 0
   m_Name: HexCell
   m_TagString: Untagged
@@ -271,27 +271,6 @@ Transform:
   - {fileID: 1308520661898762278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &-5709780137705848068
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2902519359746391468}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 0.5, z: 1}
-  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!82 &589386377177788566
 AudioSource:
   m_ObjectHideFlags: 0
@@ -419,6 +398,29 @@ MonoBehaviour:
   cellBaseGameObject: {fileID: 2699290928393085297}
   emptyCellMaterial: {fileID: 2100000, guid: c9df27c2f046bc845bfaf03ff00e0d0a, type: 2}
   rotateAudioSource: {fileID: 589386377177788566}
+--- !u!136 &4231806645565355612
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2902519359746391468}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3181256876574762218
 GameObject:
   m_ObjectHideFlags: 0
