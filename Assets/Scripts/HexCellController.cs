@@ -41,7 +41,7 @@ public class HexCellController : MonoBehaviour, ICellController {
         }
 
         if (cell.isEnd || cell.isStraight) {
-            for (int i = 0; i < paths.Count; i++) {
+            for (int i = 0; i < joints.Count; i++) {
                 joints[i].SetActive(false);
             }
         }
