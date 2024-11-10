@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public GameObject cellTemplate;
+    public GameObject hexCellTemplate;
     public GameObject menuUI;
     public Camera mainCamera;
     public ParticleSystem victoryParticleSystem;
@@ -42,7 +43,12 @@ public class GameController : MonoBehaviour {
                     transform.position.z + (currentLevel.height / 2f) - z - 0.5f
                 );
 
-                GameObject cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
+                GameObject cellInstance;
+                if (cellType == CellType.Square) {
+                    cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
+                } else {
+                    cellInstance = Instantiate(hexCellTemplate, pos, Quaternion.identity);
+                }
                 cellInstances.Add(cellInstance);
 
                 ICellController cellController = cellInstance.GetComponent<ICellController>();
