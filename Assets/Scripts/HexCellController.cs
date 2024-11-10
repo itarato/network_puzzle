@@ -19,7 +19,7 @@ public class HexCellController : MonoBehaviour, ICellController {
     public GameObject pathsGameObjects;
     public Material onMaterial;
     public Material offMaterial;
-    public float rotateTime = 0.2f;
+    public float rotateTime = 0.14f;
     public GameObject cellBaseGameObject;
     public Material emptyCellMaterial;
 
