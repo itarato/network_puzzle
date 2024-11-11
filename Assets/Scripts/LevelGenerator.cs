@@ -6,10 +6,10 @@ public class LevelGenerator {
     // North, east, south, west.
     static int[,] neighbourMap = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 
-    public static Level Generate(int width, int height, bool isAcrossBorders) {
+    public static Level Generate(int width, int height, bool isAcrossBorders, int randomizerAttempt = 3) {
         Level level = GenerateRandomLevel(width, height, isAcrossBorders);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < randomizerAttempt; i++) {
             RandomizeLevel(level);
             if (!level.IsSolution()) break;
         }

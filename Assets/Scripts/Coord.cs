@@ -1,3 +1,5 @@
+#nullable enable
+
 public class Coord {
     public int x;
     public int y;
@@ -15,7 +17,7 @@ public class Coord {
         return (x.ToString() + ":" + y.ToString()).GetHashCode();
     }
 
-    public override bool Equals(object obj) {
+    public override bool Equals(object? obj) {
         if (obj is Coord other) {
             return x == other.x && y == other.y;
         }
