@@ -24,6 +24,7 @@ public class LevelGenerator {
         bool[,] cellsBuilderMap = new bool[width * height, 4];
         Queue<Coord> workQueue = new Queue<Coord>();
         workQueue.Enqueue(sourceCoord);
+        bool isFirst = true;
 
         while (workQueue.Count > 0) {
             Coord currentCoord = workQueue.Dequeue();
@@ -67,7 +68,8 @@ public class LevelGenerator {
             }
 
             // Pick a few random (1-3).
-            int newNeighbourCount = rnd.Next(Math.Min(1, neighbourCoords.Count), Math.Min(3, neighbourCoords.Count));
+            int newNeighbourCount = RandomNeighbourCount(rnd, neighbourCoords.Count, isFirst);
+
             List<int> keys = neighbourCoords.Keys.ToList<int>();
             for (int i = 0; i < newNeighbourCount; i++) {
                 int randomKeyIndex = rnd.Next(keys.Count);
@@ -82,10 +84,12 @@ public class LevelGenerator {
 
                 cellsBuilderMap[currentCoordIndex, currentCoordDirection] = true;
                 cellsBuilderMap[neighbourCoordIndex, neighbourCoordDirection] = true;
-                
+
                 // Enqueue it.
                 workQueue.Enqueue(neighbourCoord);
             }
+
+            isFirst = false;
         }
 
         List<Level.Cell> cells = new List<Level.Cell>();
@@ -100,6 +104,29 @@ public class LevelGenerator {
 
         Level level = new Level(width, height, cells, sourceCoord, isAcrossBorders);
         return level;
+    }
+
+    private static int RandomNeighbourCount(Random rnd, int available, bool isFirst) {
+        int[] weights = {
+            isFirst ? 0 : 5, // 0
+            5, // 1
+            10, // 2
+            30, // 3
+            2, // 4
+        };
+
+        int totalWeight = 0;
+        for (int i = 0; i <= available; i++) totalWeight += weights[i];
+
+        int randInt = rnd.Next(0, totalWeight);
+        for (int i = 0; i <= available; i++) {
+            if (randInt < weights[i]) {
+                return i;
+            }
+            randInt -= weights[i];
+        }
+
+        throw new Exception("Missed weight assessment.");
     }
 
     private static void RandomizeLevel(Level level) {
