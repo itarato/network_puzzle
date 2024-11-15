@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class HexLevelGenerator {
     // NorthWest, NorthEast, East, SouthEast, SouthWest, West.
     static int[,] evenNeighbourMap = { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 0 } };
     static int[,] oddNeighbourMap = { { -1, -1 }, { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 1 }, { -1, 0 } };
 
-    public static HexLevel Generate(int width, int height) {
-        HexLevel level = GenerateRandomLevel(width, height);
+    public static HexLevel Generate(int width, int height, bool isAcrossBorders) {
+        HexLevel level = GenerateRandomLevel(width, height, isAcrossBorders);
 
         for (int i = 0; i < 3; i++) {
             RandomizeLevel(level);
@@ -18,7 +19,7 @@ public class HexLevelGenerator {
         return level;
     }
 
-    private static HexLevel GenerateRandomLevel(int width, int height) {
+    private static HexLevel GenerateRandomLevel(int width, int height, bool isAcrossBorders) {
         System.Random rnd = new System.Random();
         Coord sourceCoord = new Coord(rnd.Next(0, width), rnd.Next(0, height));
 
@@ -41,7 +42,10 @@ public class HexLevelGenerator {
                 } else {
                     neighbourCoord = new Coord(currentCoord.x + oddNeighbourMap[i, 0], currentCoord.y + oddNeighbourMap[i, 1]);
                 }
-                int neighbourCoordIndex = neighbourCoord.y * width + neighbourCoord.x;
+
+                if (isAcrossBorders) {
+                    neighbourCoord = HexLevel.CrossBorderNeighbour(neighbourCoord, currentCoord, i, width, height);
+                }
 
                 if (neighbourCoord.x < 0 || neighbourCoord.y < 0 || neighbourCoord.x >= width || neighbourCoord.y >= height) {
                     continue;
@@ -53,6 +57,7 @@ public class HexLevelGenerator {
                     continue;
                 }
 
+                int neighbourCoordIndex = neighbourCoord.y * width + neighbourCoord.x;
                 // Remove non empty neighbour facing ones.
                 if (
                     cellsBuilderMap[neighbourCoordIndex, 0] ||
@@ -102,7 +107,7 @@ public class HexLevelGenerator {
             }));
         }
 
-        HexLevel level = new HexLevel(width, height, cells, sourceCoord);
+        HexLevel level = new HexLevel(width, height, cells, sourceCoord, isAcrossBorders);
         return level;
     }
 

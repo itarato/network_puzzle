@@ -61,11 +61,11 @@ public class MenuController : MonoBehaviour {
 
     public void OnClickSquareToggle(bool value) {
         cellType = CellType.Square;
-        acrossBordersToggleGameObject.SetActive(true);
+        //acrossBordersToggleGameObject.SetActive(true);
     }
 
     public void OnClickHexToggle(bool value) {
         cellType = CellType.Hex;
-        acrossBordersToggleGameObject.SetActive(false);
+        //acrossBordersToggleGameObject.SetActive(false);
     }
 }

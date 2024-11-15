@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using TMPro;
 
 public class HexLevel : ILevel {
     public class Cell : ICell {
@@ -65,15 +67,18 @@ public class HexLevel : ILevel {
 
     private List<Coord> endCellCoordsCache = new List<Coord>();
 
+    private bool isAcrossBorders;
+
     // NorthWest, NorthEast, East, SouthEast, SouthWest, West.
     static int[,] evenNeighbourMap = { { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 0 } };
     static int[,] oddNeighbourMap = { { -1, -1 }, { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 1 }, { -1, 0 } };
 
-    public HexLevel(int width, int height, List<Cell> cells, Coord source) {
+    public HexLevel(int width, int height, List<Cell> cells, Coord source, bool isAcrossBorders) {
         this.width = width;
         this.height = height;
         this.cells = cells;
         this.source = source;
+        this.isAcrossBorders = isAcrossBorders;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -137,6 +142,11 @@ public class HexLevel : ILevel {
             } else {
                 neighbourCoord = new Coord(coord.x + oddNeighbourMap[i, 0], coord.y + oddNeighbourMap[i, 1]);
             }
+
+            if (isAcrossBorders) {
+                neighbourCoord = CrossBorderNeighbour(neighbourCoord, coord, i, width, height);
+            }
+
             neighbours.Add(neighbourCoord);
         }
 
@@ -155,5 +165,81 @@ public class HexLevel : ILevel {
         }
 
         return true;
+    }
+
+    public static Coord CrossBorderNeighbour(Coord coord, Coord originCoord, int dirIndex, int width, int height) {
+        if (coord.x >= 0 && coord.y >= 0 && coord.x < width && coord.y < height) {
+            return coord;
+        }
+
+        Coord newCoord;
+
+        if (dirIndex == 2 || dirIndex == 5) {
+            return new Coord((coord.x + width) % width, coord.y);
+        } else if (dirIndex == 0) {
+            int maxX = (width - 1 - coord.x) * 2;
+            int maxY = height - 1 - coord.y;
+
+            if (maxX < maxY) {
+                if (coord.y % 2 == 0) {
+                    newCoord = new Coord(width - 1, coord.y + maxX);
+                } else {
+                    newCoord = new Coord(width - 1, coord.y + maxX + 1);
+                }
+            } else {
+                newCoord = new Coord(coord.x + (int)Math.Floor(maxY / 2f), height - 1);
+            }
+        } else if (dirIndex == 1) { // BUG
+            int maxX = coord.x * 2;
+            int maxY = height - 1 - coord.y;
+
+            if (maxX < maxY) {
+                if (coord.y % 2 == 0) {
+                    throw new Exception("Direction 1 cannot have even Y coord here.");
+                } else {
+                    newCoord = new Coord(0, coord.y + maxX);
+                }
+            } else {
+                if (coord.y % 2 == 0) {
+                    throw new Exception("Direction 1 cannot have even Y coord here.");
+                } else {
+                    newCoord = new Coord(coord.x - (int)Math.Ceiling(maxY / 2f), height - 1);
+                }
+            }
+        } else if (dirIndex == 3) {
+            int maxX = coord.x * 2;
+            int maxY = coord.y;
+
+            if (maxX < maxY) {
+                if (coord.y % 2 == 0) {
+                    newCoord = new Coord(0, coord.y - (maxX + 1));
+                } else {
+                    newCoord = new Coord(0, coord.y - maxX);
+                }
+            } else {
+                newCoord = new Coord(coord.x - (int)Math.Ceiling(maxY / 2f), 0);
+            }
+        } else if (dirIndex == 4) { // BUG
+            int maxX = (width - 1 - coord.x) * 2;
+            int maxY = coord.y;
+
+            if (maxX < maxY) {
+                if (coord.y % 2 == 0) {
+                    newCoord = new Coord(width - 1, coord.y - maxX);
+                } else {
+                    newCoord = new Coord(width - 1, coord.y - (maxX + 1));
+                }
+            } else {
+                newCoord = new Coord(coord.x + (int)Math.Floor(maxY / 2f), 0);
+            }
+        } else {
+            throw new Exception("Invalid dir index");
+        }
+
+        if (newCoord.Equals(originCoord)) {
+            return coord;
+        }
+
+        return newCoord;
     }
 }

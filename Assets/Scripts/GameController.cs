@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour {
         if (cellType == CellType.Square) {
             currentLevel = LevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
         } else if (cellType == CellType.Hex) {
-            currentLevel = HexLevelGenerator.Generate(bounds.x, bounds.y);
+            currentLevel = HexLevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
         }
 
         CleanupLevel();
