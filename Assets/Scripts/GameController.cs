@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public GameObject cellTemplate;
     public GameObject hexCellTemplate;
+    public GameObject triangleCellTemplate;
     public GameObject menuUI;
     public Camera mainCamera;
     public ParticleSystem victoryParticleSystem;
@@ -33,6 +33,8 @@ public class GameController : MonoBehaviour {
             currentLevel = LevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
         } else if (cellType == CellType.Hex) {
             currentLevel = HexLevelGenerator.Generate(bounds.x, bounds.y, isAcrossBorders);
+        } else if (cellType == CellType.Triangle) {
+            currentLevel = TriangleLevelGenerator.Generate(bounds.x, bounds.y);
         }
 
         CleanupLevel();
@@ -47,19 +49,31 @@ public class GameController : MonoBehaviour {
                         transform.position.y,
                         transform.position.z + (currentLevel.height / 2f) - z - 0.5f
                     );
-                } else {
+                } else if (cellType == CellType.Hex) {
                     pos = new Vector3(
                         transform.position.x - (currentLevel.width * hexCellWidth / 2f) + x * hexCellWidth - (hexCellWidth / 2f) * (z % 2) + (hexCellWidth * 0.75f),
                         transform.position.y,
                         transform.position.z + (currentLevel.height * 0.75f / 2f) - (0.75f * z) - 0.375f
                     );
+                } else if (cellType == CellType.Triangle) {
+                    pos = new Vector3(
+                        transform.position.x - (currentLevel.width / 2f) + x + 0.5f,
+                        transform.position.y,
+                        transform.position.z + (currentLevel.height / 2f) - z - 0.5f
+                    );
+                } else {
+                    throw new System.Exception("Invalid cell type");
                 }
 
                 GameObject cellInstance;
                 if (cellType == CellType.Square) {
                     cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
-                } else {
+                } else if (cellType == CellType.Hex) {
                     cellInstance = Instantiate(hexCellTemplate, pos, Quaternion.identity);
+                } else if (cellType == CellType.Triangle) {
+                    cellInstance = Instantiate(triangleCellTemplate, pos, Quaternion.identity);
+                } else {
+                    throw new System.Exception("Invalid cell type");
                 }
                 cellInstances.Add(cellInstance);
 

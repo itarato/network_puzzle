@@ -81,7 +81,7 @@ public class CellController : MonoBehaviour, ICellController {
         isGameOver = true;
     }
 
-    private void OnMouseDown() {
+    public void OnMouseDown() {
         if (isMoving) return;
         if (isGameOver) return;
         if (cell.isEmpty) return;

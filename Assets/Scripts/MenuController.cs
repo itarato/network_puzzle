@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
     public TMP_Dropdown levelsDropdown;
@@ -39,7 +37,7 @@ public class MenuController : MonoBehaviour {
     public void OnClickStartButton() {
         Coord selectedCoord = levels[selectedIndex];
 
-        gameController.Reload(selectedCoord, isAcrossBorders, cellType);
+        gameController.Reload(selectedCoord, isAcrossBorders, CellType.Triangle);
 
         menuUI.SetActive(false);
     }

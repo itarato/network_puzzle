@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexCellController : MonoBehaviour, ICellController {
+public class TriangleCellController : MonoBehaviour, ICellController {
     private bool isMoving = false;
     private Coord coord;
     private GameController gameController;
@@ -95,7 +95,7 @@ public class HexCellController : MonoBehaviour, ICellController {
         gameController.UpdateLevelBeforeRotation(coord);
 
         Quaternion initialRotation = pathsGameObjects.transform.rotation;
-        Quaternion targetRotation = initialRotation * Quaternion.Euler(0f, 60f, 0f);
+        Quaternion targetRotation = initialRotation * Quaternion.Euler(0f, 120f, 0f);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration) {

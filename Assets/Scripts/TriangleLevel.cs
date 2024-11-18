@@ -50,8 +50,9 @@ public class TriangleLevel : ILevel {
 
     private List<Coord> endCellCoordsCache = new List<Coord>();
 
-    // North, east, south, west.
+    // NorthEast, SouthEast, West.
     static int[,] rightFacingNeighbourMap = { { 0, -1 }, { 0, 1 }, { -1, 0 } };
+    // SouthWest, NorthWest, East.
     static int[,] leftFacingNeighbourMap = { { 0, 1 }, { 0, -1 }, { 1, 0 } };
 
     public TriangleLevel(int width, int height, List<Cell> cells, Coord source) {

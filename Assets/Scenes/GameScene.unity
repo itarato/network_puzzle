@@ -6823,6 +6823,8 @@ MonoBehaviour:
     type: 3}
   hexCellTemplate: {fileID: 2902519359746391468, guid: b801ffa43abeced49aafe4ed6246362c,
     type: 3}
+  triangleCellTemplate: {fileID: 2902519359746391468, guid: 6fd93cdee2d3dce41ac91cf74eda73e1,
+    type: 3}
   menuUI: {fileID: 25998319}
   mainCamera: {fileID: 330585545}
   victoryParticleSystem: {fileID: 311132306}
