@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
         for (int z = 0; z < currentLevel.height; z++) {
             for (int x = 0; x < currentLevel.width; x++) {
                 Vector3 pos;
+                Quaternion rot = Quaternion.identity;
 
                 if (cellType == CellType.Square) {
                     pos = new Vector3(
@@ -61,17 +62,23 @@ public class GameController : MonoBehaviour {
                         transform.position.y,
                         transform.position.z + (currentLevel.height / 2f) - z - 0.5f
                     );
+
+                    if ((z + x) % 2 == 0) {
+                        rot = Quaternion.Euler(0f, 150f, 0f);
+                    } else {
+                        rot = Quaternion.Euler(0f, 90f, 0f);
+                    }
                 } else {
                     throw new System.Exception("Invalid cell type");
                 }
 
                 GameObject cellInstance;
                 if (cellType == CellType.Square) {
-                    cellInstance = Instantiate(cellTemplate, pos, Quaternion.identity);
+                    cellInstance = Instantiate(cellTemplate, pos, rot);
                 } else if (cellType == CellType.Hex) {
-                    cellInstance = Instantiate(hexCellTemplate, pos, Quaternion.identity);
+                    cellInstance = Instantiate(hexCellTemplate, pos, rot);
                 } else if (cellType == CellType.Triangle) {
-                    cellInstance = Instantiate(triangleCellTemplate, pos, Quaternion.identity);
+                    cellInstance = Instantiate(triangleCellTemplate, pos, rot);
                 } else {
                     throw new System.Exception("Invalid cell type");
                 }
