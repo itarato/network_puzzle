@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class HexLevelGenerator {
     // NorthWest, NorthEast, East, SouthEast, SouthWest, West.
@@ -67,6 +66,11 @@ public class HexLevelGenerator {
                     cellsBuilderMap[neighbourCoordIndex, 4] ||
                     cellsBuilderMap[neighbourCoordIndex, 5]
                 ) {
+                    continue;
+                }
+
+                // Remove if already added - in the case of neighbour being the same as the opposite one from the current cell.
+                if (neighbourCoords.ContainsValue(neighbourCoord)) {
                     continue;
                 }
 
